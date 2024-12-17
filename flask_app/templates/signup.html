@@ -1,0 +1,42 @@
+{% extends 'shared/layout.html' %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="static/css/signup.css">
+{% endblock %}
+
+{% block content %}
+
+<!-- Flash Messages Section -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    <ul class="flash-messages">
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endwith %}
+
+<div class="signup-container">
+    <h2>Sign Up</h2>
+    <form action="{{ url_for('processsignup') }}" method="POST" class="signup-form">
+        <!-- Email Input -->
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <!-- Password Input -->
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <!-- Confirm Password Input -->
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+        </div>
+        <!-- Submit Button -->
+        <button type="submit" class="btn">Sign Up</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,110 @@
+/* Login Page Styling */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #0079bf;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #0079bf;
+    box-shadow: 0 0 5px rgba(0, 121, 191, 0.3);
+}
+
+.btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #0079bf;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #005a8c;
+}
+
+
+/* Flash Message Styling */
+.flash-messages {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 400px;
+    text-align: center;
+}
+
+.flash-messages li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #fff;
+}
+
+/* Error Messages */
+.flash-messages li.error {
+    background-color: #f44336; /* Red */
+    border: 1px solid #d32f2f;
+}
+
+/* Success Messages (Optional for other use cases) */
+.flash-messages li.success {
+    background-color: #4caf50; /* Green */
+    border: 1px solid #388e3c;
+}
+
+/* Warning Messages (Optional) */
+.flash-messages li.warning {
+    background-color: #ff9800; /* Orange */
+    border: 1px solid #f57c00;
+}
+
+/* Informational Messages (Optional) */
+.flash-messages li.info {
+    background-color: #2196f3; /* Blue */
+    border: 1px solid #1976d2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .flash-messages {
+        width: 90%;
+    }
+}

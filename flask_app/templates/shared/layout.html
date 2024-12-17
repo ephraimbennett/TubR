@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TrubR{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/layout.css">
+    <link rel="shortcut icon" href="/static/images/logo.png">
+    {% block extra_style %} {% endblock %}
+</head>
+<body>
+    <!-- Banner -->
+    <header>
+        <div class="banner">
+            <h1>TrubR</h1>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul class="nav">
+            <!-- Display username or welcome message -->
+            <li class="user-info">
+              {% if user.is_authenticated %}
+                  Welcome, {{ user.email }}
+              {% else %}
+                  Welcome, Guest
+              {% endif %}
+            </li>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <!-- Login/Logout and Signup Buttons -->
+            {% if user.is_authenticated %}
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signup') }}">Signup</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        <!-- Main content goes here -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Ephraim Bennett. All rights reserved.</p>
+    </footer>
+    {% block extra_script %} {% endblock %}
+</body>
+</html>

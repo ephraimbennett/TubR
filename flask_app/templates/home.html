@@ -1,0 +1,70 @@
+{% extends 'shared/layout.html' %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="static/css/home.css">
+{% endblock %}
+
+{% block extra_script %}
+<!--For sending AJAX-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="static/scripts/home.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="main-content">
+        {% if user.is_authenticated %}
+            <h1>Welcome, {{ user.email }}!</h1>
+            <p>What would you like to do?</p>
+            
+            <div class="options">
+                <button id="openBoardBtn">Open an Existing Board</button>
+                <button id="createBoardBtn">Create a New Board</button>
+            </div>
+
+            <!-- Existing Boards Modal -->
+            <div id="existingBoardsModal" class="modal hidden">
+                <div class="modal-content">
+                    <h2>Your Boards</h2>
+                    <ul id="userBoardsList">
+                        {% for board in user.boards %}
+                            <li><a href="{{ url_for('view_board', board_id=board.board_id) }}">{{ board.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    <button id="closeExistingBoardsBtn">Close</button>
+                </div>
+            </div>
+            <!-- Create Board Modal -->
+            <div id="createBoardModal" class="modal">
+                <div class="modal-header">Create a New Board</div>
+                <div class="modal-content">
+                    <label for="boardName">Board Name:</label>
+                    <input type="text" id="boardName" name="boardName" placeholder="Enter board name" required>
+            
+                    <label for="boardDescription">Description:</label>
+                    <input type="text" id="boardDescription" name="boardDescription" placeholder="Enter description" required>
+                
+                    <!-- Add Members Section -->
+                    <label for="boardMembers">Add Members (Emails):</label>
+                    <div id="membersList">
+                        <div class="member-item">
+                            <input type="email" name="boardMembers[]" class="member-email" placeholder="Enter member email" required>
+                            <button type="button" class="remove-member-btn">Remove</button>
+                        </div>
+                    </div>
+                <button type="button" id="addMemberBtn" class="btn secondary">Add Member</button>
+                </div>
+                <div class="modal-footer">
+                    <button id="closeCreateBoardBtn">Cancel</button>
+                    <button id="saveBoardBtn">Create</button>
+                </div>
+            </div>
+            
+            <div id="modalOverlay" class="modal-overlay"></div>
+            
+        {% else %}
+            <div class="welcome-message">
+                <h1>Login or create an account to get started!</h1>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,377 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+.board-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.board-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.board-description {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Lists Container */
+.lists-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+/* List Styles */
+.list {
+    flex: 0 0 300px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.list-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.cards-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Card Styles */
+.card {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #007BFF;
+}
+
+.card-description {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007BFF;
+    margin-top: 10px;
+    align-self: flex-start;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Add List Button */
+.add-list-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    background-color: #28a745;
+}
+
+.add-list-btn:hover {
+    background-color: #218838;
+}
+
+/* Add Card Button */
+.add-card-btn {
+    font-size: 1rem;
+    background-color: #17a2b8;
+}
+
+.add-card-btn:hover {
+    background-color: #138496;
+}
+
+
+/* General Modal Styling */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; /* Ensure it scales on smaller screens */
+    max-width: 400px; /* Maximum size for larger screens */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1000;
+    display: none; /* Initially hidden */
+}
+
+.modal .modal-header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.modal .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal .modal-content label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.modal .modal-content input {
+    width: 100%; /* Make inputs fit the modal */
+    max-width: 100%; /* Prevent inputs from exceeding modal width */
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+.modal .modal-content input:focus {
+    outline: none;
+    border-color: #0079bf;
+    box-shadow: 0 0 5px rgba(0, 121, 191, 0.3);
+}
+
+.modal .modal-footer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.modal .modal-footer button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #0079bf;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal .modal-footer button:hover {
+    background-color: #005a8c;
+}
+
+/* Show the modal when active */
+.modal.active {
+    display: block;
+}
+
+/* Page Overlay Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.modal-overlay.active {
+    display: block;
+}
+
+
+/* Modal Styling */
+.modal-content label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Updated Card Styles */
+.card {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px; /* Increased padding for better spacing */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between card elements */
+    position: relative; /* Required for button alignment */
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #007BFF;
+}
+
+.card-description {
+    width: 100%; /* Ensure it takes the full width of its container */
+    padding: 0.5em;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+    resize: none; /* Disable manual resizing */
+    overflow-y: auto; /* Enable vertical scrolling only if necessary */
+    word-wrap: break-word; /* Ensures long words break to fit within the width */
+    white-space: pre-wrap; /* Preserves new lines and wraps text properly */
+    box-sizing: border-box; /* Include padding and border in the element's width */
+}
+.card-position {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: auto; /* Push position details to the bottom if needed */
+}
+
+/* Card Actions */
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.card-actions button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* Edit Button */
+.edit-card-btn {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.edit-card-btn:hover {
+    background-color: #e0a800;
+}
+
+/* Delete Button */
+.delete-card-btn {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.delete-card-btn:hover {
+    background-color: #c82333;
+}
+
+
+/* Placeholder styling for dragging */
+.sortable-placeholder {
+    background-color: #e0e0e0;
+    border: 2px dashed #bbb;
+    height: 50px; /* Approximate height of a card */
+    margin: 10px 0;
+}
+
+/* Disable text selection while dragging */
+.card {
+    user-select: none;
+    cursor: grab;
+}
+
+.card:active {
+    cursor: grabbing;
+}
+
+/* Empty list styling */
+.empty-list {
+    min-height: 100px; /* Ensure the list has space to drag into */
+    border: 2px dashed #bbb;
+    background-color: #f9f9f9;
+}
+/* Chat Container */
+.chat-container {
+    width: 100%;
+    height: 20vh; /* Fixed height relative to the viewport */
+    max-height: 20vh; /* Prevents growth beyond its intended size */
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    display: flex;
+    flex-direction: column; /* Ensures chat-window and input align vertically */
+    margin-top: 1rem; /* Adds spacing above the chat container */
+}
+
+/* Chat Window */
+.chat-window {
+    flex-grow: 1; /* Fills available vertical space */
+    overflow-y: auto; /* Enables vertical scrolling for messages */
+    padding: 0.5em;
+    background-color: #fff;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Chat Input Section */
+.chat-input-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em;
+    background-color: #f9f9f9;
+    flex-shrink: 0; /* Prevents input from shrinking */
+}
+
+.chat-input-container input {
+    flex: 1;
+    padding: 0.5em;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+}
+
+.chat-input-container input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.chat-input-container button {
+    padding: 0.5em 1em;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input-container button:hover {
+    background-color: #0056b3;
+}
