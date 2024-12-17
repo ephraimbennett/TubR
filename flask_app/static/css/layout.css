@@ -1,0 +1,97 @@
+/* General Reset */
+body, h1, h2, h3, p, ul, li, a {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+    margin: 0;
+}
+
+/* Header Banner */
+header .banner {
+    background-color: #0079bf;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header .banner h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #005a8c;
+    padding: 10px 0;
+}
+
+nav .nav {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav .nav li {
+    margin: 0 15px;
+}
+
+nav .nav a {
+    text-decoration: none;
+    color: #fff;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+
+nav .nav a:hover {
+    background-color: #0079bf;
+    border-radius: 4px;
+}
+
+/* User Info */
+nav .user-info {
+    font-style: italic;
+    color: #d1ecf1;
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+    background-color: #fff;
+    max-width: 1200px;
+    margin: 20px auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #005a8c;
+    color: #fff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav .nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav .nav li {
+        margin: 10px 0;
+    }
+}

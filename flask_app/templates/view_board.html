@@ -1,0 +1,87 @@
+{% extends 'shared/layout.html' %}
+
+{% block title %}
+    {{ board.name }} - Board
+{% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/view_board.css') }}">
+<!-- Include jQuery UI CSS -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+{% endblock %}
+
+{% block extra_script %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Include jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdn.socket.io/3.1.1/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='scripts/view_board.js') }}"></script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="board-container">
+    <h1 class="board-title">{{ board.name }}</h1>
+    <p class="board-description">{{ board.description }}</p>
+
+    <!-- Lists Container -->
+    <div id="lists-container" class="lists-container">
+        {% for list in board.lists %}
+        <div class="list" id="list_{{list.list_id}}">
+            <div class="list-header">
+                <h2 class="list-title">{{ list.name }}</h2>
+            </div>
+            <div class="list-items">
+                {% for card in list.cards %}
+                <div class="card" id="card_{{ card.card_id }}">
+                    <div class="card-content">
+                        <h3 class="card-title">{{ card.title }}</h3>
+                        <input type="text" value="{{ card.description }}" disabled class="card-description">
+                    </div>
+                    <div class="card-actions">
+                        <button class="edit-card-btn">Edit</button>
+                        <button class="delete-card-btn">Delete</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="list-footer">
+                <button class="add-card-btn">+ Add Card</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!--Add Card Modal-->
+    <div id="createCardModal" class="modal">
+        <div class="modal-header">Create a New Card</div>
+        <div class="modal-content">
+            <label for="boardName">Card Title:</label>
+            <input type="text" id="cardTitle" name="cardTitle" placeholder="Enter card title" required>
+    
+            <label for="boardDescription">Description:</label>
+            <input type="text" id="cardDescription" name="cardDescription" placeholder="Enter description" required>
+        </div>
+        <div class="modal-footer">
+            <button id="closeCreateCardBtn">Cancel</button>
+            <button id="closeSaveCardBtn">Create</button>
+        </div>
+    </div>
+
+    <div id="modalOverlay" class="modal-overlay"></div>
+
+
+    <!-- Chat System -->
+    <div id="chat-container" class="chat-container">
+        <div id="chatWindow" class="chat-window">
+            <!-- Chat messages will be appended here -->
+        </div>
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" placeholder="Type a message..." />
+            <button id="sendChatBtn" class="send-btn">Send</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
