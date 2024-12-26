@@ -253,6 +253,36 @@ class database:
         except Exception as e:
             print(e)
             return 0
+    def addList(self, list_name, board_id, position):
+        sql = """
+                INSERT INTO lists (board_id, name, position) VALUES (%s, %s, %s)
+                """
+        try:
+            return self.query(sql, [board_id, list_name, position])[0]['LAST_INSERT_ID()']
+        except Exception as e:
+            print(e)
+            return 0
+        
+    def reorderList(self, new_order):
+        sql = """
+            UPDATE lists
+            SET position=%s
+            WHERE list_id=%s
+            """
+        i = 0
+        for l in new_order:
+            try:
+                self.query(sql, [i, l])
+                i += 1
+            except Exception as e:
+                print(e)
+                return 0
+        return 1
+                
+        
+            
+        
+        
 
     
     

@@ -23,6 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
         lockedCards = data;
     });
 
+    socket.on('new_list', (data) => {
+        const list = $(`
+        <div class="list" id="list_${data.list_id}">
+            <div class="list-header">
+                <h2 class="list-title"> ${data.list_name}</h2>
+            </div>
+            <div class="list-items"></div>
+            <div class="list-footer">
+                <button class="add-card-btn">+ Add Card</button>
+            </div>
+        </div>
+        `)
+        $('#lists-container').append(list);
+
+        enableSort();
+        
+        // Ensure empty lists are valid drop targets
+        $(".list-items").each(function () {
+            if ($(this).children().length === 0) {
+                $(this).addClass("empty-list");
+            }
+        });
+    });
+
     socket.on('card_edited', (data) => {
         console.log(data);
         idEdited = "card_" + data.card_id;
@@ -89,8 +113,36 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
 
+    socket.on('lists_reordered', (data) => {
+        const { order } = data;
 
-     // Enable sortable functionality for all list-items containers
+        console.log("Received new list order:", order);
+
+        // Reorder the lists in the DOM based on the new order
+        order.forEach((listId) => {
+            const listElement = $(`#list_${listId}`);
+            $("#lists-container").append(listElement); // Move the list to the new position
+        });
+
+        console.log("Lists reordered successfully on this client.");
+    });
+
+    enableSort();
+
+    // Ensure empty lists are valid drop targets
+    $(".list-items").each(function () {
+        if ($(this).children().length === 0) {
+            $(this).addClass("empty-list");
+        }
+    });
+
+    enableListSort();
+
+});
+
+function enableSort()
+{
+    // Enable sortable functionality for all list-items containers
     $(".list-items").sortable({
         connectWith: ".list-items", // Allow movement between lists
         placeholder: "sortable-placeholder", // Class for the placeholder
@@ -128,28 +180,35 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         },
     }).disableSelection();
+}
 
-    // Ensure empty lists are valid drop targets
-    $(".list-items").each(function () {
-        if ($(this).children().length === 0) {
-            $(this).addClass("empty-list");
+function enableListSort() {
+    // Enable sortable functionality for the lists container
+    $("#lists-container").sortable({
+        axis: "x", // Restrict movement to the horizontal axis
+        tolerance: "pointer", // Makes dragging smoother
+        placeholder: "sortable-list-placeholder", // Class for the placeholder
+        forcePlaceholderSize: true, // Placeholder matches list size
+        stop: function (event, ui) {
+            
+            // Get the new order of list IDs
+            const newOrder = $("#lists-container .list").map(function () {
+                return $(this).attr("id").replace("list_", "");
+            }).get();
+
+            console.log("New list order:", newOrder);
+
+            // Emit event to the backend with the new order
+            socket.emit('reorder_lists', {
+                order: newOrder,
+                room: board.board_id
+            });
         }
-    });
-
-    $(document).on("sortreceive", function (event, ui) {
-        const targetList = $(event.target);
-
-        // Remove empty list class when a card is dropped
-        if (targetList.hasClass("empty-list")) {
-            //targetList.removeClass("empty-list");
-        }
-    });
-
-});
+    }).disableSelection();
+}
 
 
-
-$('.add-card-btn').click(function(){
+$(document).on('click', '.add-card-btn', function(){
     
     document.getElementById('createCardModal').classList.add('active');
     document.getElementById('modalOverlay').classList.add('active');
@@ -223,6 +282,27 @@ $(document).on('click', '.edit-card-btn', function () {
     });
 });
 
+
+$(document).on('click', '.add-list-btn', function () {
+    // open the create list modal. 
+    document.getElementById('createListModal').classList.add('active');
+    document.getElementById('modalOverlay').classList.add('active');
+});
+
+$(document).on('click', '#closeCreateListBtn', function () {
+    document.getElementById('createListModal').classList.remove('active');
+    document.getElementById('modalOverlay').classList.remove('active');
+});
+
+$(document).on('click', '#createListSubmitBtn', function () {   
+    socket.emit('create_list', {
+        name: $('#listNameInput').val(),
+        room: board.board_id,
+        position: board.lists.length
+    });
+    document.getElementById('createListModal').classList.remove('active');
+    document.getElementById('modalOverlay').classList.remove('active');
+})
 
 $('#closeSaveCardBtn').click(() => {
     let title = $("#cardTitle").val();

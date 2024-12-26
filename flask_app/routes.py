@@ -58,8 +58,9 @@ def processsignup():
 	create = db.createUser(email=form_fields['email'], password=form_fields['password'], role='user')
 
 	if create['success'] == 1:
+		session['email'] = db.reversibleEncrypt('encrypt', form_fields['email'])
 		flash("Account created successfully! Please log in.", "success")
-		return redirect(url_for('login'))
+		return redirect(url_for('home'))
 	if create['success'] == -1:
 		flash("Email already exists. Try again.", "error")
 		return redirect(url_for('signup'))
@@ -123,6 +124,9 @@ def getBoard(board_id):
 	
 	# need to get the lists
 	list_rows = db.query("SELECT * FROM lists WHERE board_id=%s", [board['board_id']])
+	list_rows = sorted(list_rows, key=lambda x: x['position'])
+	for list in list_rows:
+		print(list['name'], list['position'])
 	board['lists'] = list_rows
 	for list in list_rows:
 		# get the cards for this list
@@ -239,3 +243,17 @@ def out_message(data):
 	print(data['msg'])
 
 	emit('in_message', {'msg': data['msg'], 'user': user['email']}, room=data['room'])
+
+@socketio.on('create_list')
+def create_list(data):
+	list_id = db.addList(data['name'], data['room'], data['position'])
+	emit('new_list', {'list_id': list_id, 'list_name': data['name']}, room=data['room'])
+
+@socketio.on('reorder_lists')
+def reorder_lists(data):
+	
+	db.reorderList(data['order'])
+
+	print(db.query("SELECT * FROM lists"))
+	
+	emit('lists_reordered', data, room=data['room'], include_self=False)

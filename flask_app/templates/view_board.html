@@ -54,6 +54,11 @@
         {% endfor %}
     </div>
 
+    <!-- Add List Button -->
+    <div class="add-list-container">
+        <button id="addListBtn" class="add-list-btn">+ Add List</button>
+    </div>
+
     <!--Add Card Modal-->
     <div id="createCardModal" class="modal">
         <div class="modal-header">Create a New Card</div>
@@ -69,6 +74,22 @@
             <button id="closeSaveCardBtn">Create</button>
         </div>
     </div>
+
+    <!-- Create List Modal -->
+    <div id="createListModal" class="modal">
+        <div class="modal-header">
+            <span>Create New List</span>
+            <button id="closeCreateListBtn" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-content">
+            <label for="listNameInput">List Name:</label>
+            <input type="text" id="listNameInput" placeholder="Enter list name" />
+        </div>
+        <div class="modal-footer">
+            <button id="createListSubmitBtn" class="submit-btn">Create</button>
+        </div>
+    </div>
+
 
     <div id="modalOverlay" class="modal-overlay"></div>
 
